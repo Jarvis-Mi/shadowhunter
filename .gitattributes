@@ -1,0 +1,43 @@
+# Normalise line endings so Windows and Linux checkouts agree.
+* text=auto eol=lf
+
+*.py    text eol=lf
+*.md    text eol=lf
+*.json  text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.css   text eol=lf
+*.qss   text eol=lf
+*.toml  text eol=lf
+*.cff   text eol=lf
+*.txt   text eol=lf
+
+# Windows-only helpers keep CRLF.
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+*.ps1   text eol=crlf
+
+# Binary — never touch.
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.tif   binary
+*.tiff  binary
+*.zip   binary
+*.pt    binary
+*.pth   binary
+*.onnx  binary
+*.db    binary
+*.ttf   binary
+*.otf   binary
+*.woff  binary
+*.woff2 binary
+
+# Treat SVG as text but do not diff it inline.
+*.svg   text eol=lf -diff
+
+# Keep vendored and generated paths out of language statistics.
+assets/**    linguist-documentation
+README.fa.md linguist-documentation

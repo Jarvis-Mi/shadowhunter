@@ -1,0 +1,53 @@
+# Shadow Hunter — runtime configuration
+# Every key mirrors a dataclass field in shadowhunter/core/config.py.
+# Environment variables (SH_HOST, SH_PORT, SH_DEVICE) override this file.
+
+env:
+  tile_size: 512        # working scene side, pixels
+  crop_min: 32          # smallest window the agent may shrink to
+  crop_max: 224         # largest window it may grow to
+  crop_init: 96
+  obs_size: 84          # policy input resolution
+  step_px: 8            # translation quantum
+  scale_px: 8           # grow/shrink quantum
+  max_steps: 48         # episode budget
+  commit_bonus: 1.5     # payoff for stopping on a good zone
+  step_cost: 0.01       # pressure against wandering
+
+reward:
+  w_contrast: 1.0       # R1 — shadow/sunlit separation × isolation
+  w_structure: 0.8      # R2 — edge coherence over scene entropy
+  w_azimuth: 0.9        # R3 — blob axis vs solar azimuth
+  w_occlusion: 1.2      # penalty: neighbouring shadow leaking in
+  w_truncation: 0.8     # penalty: shadow clipped by the crop border
+  shaping: true         # potential-based shaping (Ng et al.)
+
+cnn:
+  in_channels: 4        # RGB + shadow mask
+  width: 32
+  dropout: 0.1
+  lr: 0.0003
+  batch_size: 32
+  epochs: 20
+
+rl:
+  algo: PPO             # PPO | DQN
+  total_timesteps: 20000
+  n_steps: 512
+  learning_rate: 0.0003
+  gamma: 0.98
+  seed: 42
+  device: auto
+
+server:
+  host: 127.0.0.1
+  port: 8077
+  reload: false
+  cors_origins: ["*"]
+
+# Local Ollama (override with SH_LLM_MODEL / SH_EMBED_MODEL / SH_VLM_MODEL)
+llm:
+  url: http://127.0.0.1:11434/v1
+  model: qwen3.5:4b
+  embed_model: mxbai-embed-large:latest
+  vlm_model: glm-ocr:latest

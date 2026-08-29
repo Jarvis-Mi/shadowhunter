@@ -1,0 +1,79 @@
+name: Bug report
+description: Something behaves incorrectly or crashes.
+title: "[bug] "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. The `python run.py doctor` output below is almost always the
+        first thing needed, so please do not skip it.
+
+        For anything with a security dimension, follow
+        [SECURITY.md](../blob/main/SECURITY.md) instead of opening a public issue.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What did you observe, and what did you expect instead?
+      placeholder: |
+        Ran `python run.py deck`, clicked Hunt, and the window froze.
+        I expected a height readout within a second or two.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: The smallest sequence that triggers it.
+      placeholder: |
+        1. pip install -r requirements.txt
+        2. python run.py deck
+        3. Press Hunt with the default synthetic scene
+        4. …
+    validations:
+      required: true
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Which part of the project?
+      options:
+        - PySide6 deck (run.py deck)
+        - CustomTkinter console (run.py console)
+        - Flet control (run.py control)
+        - NiceGUI web (run.py web)
+        - DearPyGui scope (run.py scope)
+        - FastAPI backend (run.py api)
+        - RL training (train-rl)
+        - CNN training (train-cnn)
+        - Vision / shadow ops
+        - Data loading or synthesis
+        - Install / packaging
+        - Not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: doctor
+    attributes:
+      label: Output of `python run.py doctor`
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: traceback
+    attributes:
+      label: Full traceback or error output
+      description: Paste the whole thing — the last line alone rarely locates the cause.
+      render: python
+
+  - type: input
+    id: scene
+    attributes:
+      label: Scene
+      description: Synthetic, or a specific dataset tile? If a GeoTIFF, its source and GSD.
+      placeholder: synthetic (default), or SpaceNet AOI-2 Vegas tile, 0.3 m

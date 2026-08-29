@@ -1,0 +1,31 @@
+# ── Shadow Hunter · 100% open-source stack ────────────────────────────────
+# Everything here is free software; nothing requires a paid dataset or licence.
+
+# Backend · learning
+torch>=2.2,<3.0
+stable-baselines3>=2.3
+gymnasium>=0.29
+
+# Backend · vision & geospatial
+opencv-python>=4.9
+rasterio>=1.3
+numpy>=1.26
+scipy>=1.11
+
+# Backend · service
+fastapi>=0.111
+uvicorn[standard]>=0.30
+pydantic>=2.7
+python-multipart>=0.0.9
+PyYAML>=6.0
+
+# UI · modern Windows front-ends
+customtkinter>=5.2
+PySide6>=6.7
+nicegui>=1.4
+flet>=0.85
+dearpygui>=1.11
+pillow>=10.2
+
+# Dev
+pytest>=8.0

@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "shadowhunter"
+version = "1.0.0"
+description = "Hybrid deep-RL + CNN building-height estimation from free satellite imagery"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+keywords = ["remote-sensing", "reinforcement-learning", "computer-vision",
+            "building-height", "shadow", "sentinel-2", "spacenet"]
+
+dependencies = [
+    "torch>=2.2",
+    "stable-baselines3>=2.3",
+    "gymnasium>=0.29",
+    "opencv-python>=4.9",
+    "rasterio>=1.3",
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "fastapi>=0.111",
+    "uvicorn[standard]>=0.30",
+    "pydantic>=2.7",
+    "python-multipart>=0.0.9",
+    "PyYAML>=6.0",
+    "pillow>=10.2",
+]
+
+[project.optional-dependencies]
+ui = [
+    "customtkinter>=5.2",
+    "PySide6>=6.7",
+    "nicegui>=1.4",
+    "flet>=0.85",
+    "dearpygui>=1.11",
+]
+web = ["flet-web>=0.85"]          # only needed for `run.py control --web`
+dev = ["pytest>=8.0", "ruff>=0.5"]
+
+[project.scripts]
+shadowhunter = "shadowhunter.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["shadowhunter*"]
+
+[tool.setuptools.package-data]
+shadowhunter = ["templates/*.json", "templates/qss/*.qss", "templates/web/*.css"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501", "B008"]

@@ -1,0 +1,322 @@
+/* ==========================================================================
+   ORBITAL DUSK — Qt stylesheet for the Shadow Hunter instrument deck.
+   Double-brace placeholders are resolved against tokens.json by theme.qss().
+   Qt has no box-shadow / letter-spacing, so depth is carried by hairlines,
+   value steps and the custom-painted canvas. Restraint is the point.
+   ========================================================================== */
+
+QWidget {
+    background-color: {{color.void}};
+    color: {{color.ink}};
+    font-family: {{font.body}};
+    font-size: {{type.body.size}}px;
+    selection-background-color: {{color.solarWash}};
+    selection-color: {{color.solar}};
+}
+
+QMainWindow, QDialog { background-color: {{color.void}}; }
+
+/* Labels must never inherit the window fill, or every caption renders as a
+   dark input-shaped box. This one rule is why the old deck looked broken. */
+QLabel { background: transparent; }
+QScrollArea, QScrollArea > QWidget > QWidget { background: transparent; }
+QWidget#RailBody { background-color: {{color.panel}}; }
+QSplitter { background-color: {{color.void}}; }
+
+/* --- Structural surfaces ------------------------------------------------- */
+QFrame#Panel {
+    background-color: {{color.panel}};
+    border: 1px solid {{color.hairline}};
+    border-radius: {{radius.md}}px;
+}
+QFrame#PanelFlush {
+    background-color: {{color.panel}};
+    border: none;
+    border-right: 1px solid {{color.hairline}};
+}
+QFrame#Elevated {
+    background-color: {{color.elevated}};
+    border: 1px solid {{color.hairline}};
+    border-radius: {{radius.md}}px;
+}
+QFrame#Rule { background-color: {{color.hairline}}; border: none; max-height: 1px; }
+QFrame#RuleV { background-color: {{color.hairline}}; border: none; max-width: 1px; }
+
+/* --- Typography roles ---------------------------------------------------- */
+QLabel#Wordmark {
+    font-family: {{font.display}};
+    font-size: {{type.title.size}}px;
+    font-weight: 700;
+    color: {{color.ink}};
+    padding: 0px;
+}
+QLabel#WordmarkAccent {
+    font-family: {{font.display}};
+    font-size: {{type.title.size}}px;
+    font-weight: 700;
+    color: {{color.solar}};
+}
+QLabel#SectionLabel {
+    font-family: {{font.mono}};
+    font-size: {{type.section.size}}px;
+    font-weight: 700;
+    color: {{color.inkFaint}};
+    padding: 0px 0px 2px 0px;
+}
+QLabel#Caption {
+    font-size: {{type.small.size}}px;
+    color: {{color.inkMuted}};
+}
+QLabel#Readout {
+    font-family: {{font.mono}};
+    font-size: {{type.readout.size}}px;
+    font-weight: 600;
+    color: {{color.ink}};
+}
+QLabel#ReadoutSolar { font-family: {{font.mono}}; font-size: {{type.readout.size}}px; font-weight: 600; color: {{color.solar}}; }
+QLabel#ReadoutShadow { font-family: {{font.mono}}; font-size: {{type.readout.size}}px; font-weight: 600; color: {{color.shadow}}; }
+QLabel#ReadoutSignal { font-family: {{font.mono}}; font-size: {{type.readout.size}}px; font-weight: 600; color: {{color.signal}}; }
+QLabel#Unit { font-family: {{font.mono}}; font-size: {{type.small.size}}px; color: {{color.inkFaint}}; }
+QLabel#Mono { font-family: {{font.mono}}; font-size: {{type.code.size}}px; color: {{color.inkMuted}}; }
+QLabel#CopilotBody {
+    font-family: {{font.persian}};
+    font-size: {{type.body.size}}px;
+    color: {{color.ink}};
+    line-height: 1.45;
+}
+QLabel#Honesty {
+    font-family: {{font.mono}};
+    font-size: {{type.small.size}}px;
+    color: {{color.solar}};
+    padding: 8px 10px;
+    background-color: {{color.solarWash}};
+    border: 1px solid {{color.solarDeep}};
+    border-radius: {{radius.sm}}px;
+}
+QLabel#MonoValue {
+    font-family: {{font.mono}};
+    font-size: {{type.code.size}}px;
+    font-weight: 600;
+    color: {{color.shadow}};
+}
+
+/* --- Buttons ------------------------------------------------------------- */
+QPushButton {
+    background-color: {{color.raised}};
+    border: 1px solid {{color.hairlineHot}};
+    border-radius: {{radius.sm}}px;
+    padding: 8px 16px;
+    font-size: {{type.body.size}}px;
+    color: {{color.ink}};
+}
+QPushButton:hover { background-color: {{color.hairlineHot}}; border-color: {{color.inkFaint}}; }
+QPushButton:pressed { background-color: {{color.hairline}}; }
+QPushButton:disabled { color: {{color.inkFaint}}; border-color: {{color.hairline}}; background-color: {{color.panel}}; }
+
+QPushButton#Primary {
+    background-color: {{color.solar}};
+    border: 1px solid {{color.solar}};
+    color: {{color.void}};
+    font-weight: 600;
+}
+QPushButton#Primary:hover { background-color: {{color.solarDeep}}; border-color: {{color.solarDeep}}; }
+QPushButton#Primary:pressed { background-color: {{color.solarWash}}; color: {{color.solar}}; }
+QPushButton#Primary:disabled { background-color: {{color.hairline}}; border-color: {{color.hairline}}; color: {{color.inkFaint}}; }
+
+QPushButton#Ghost {
+    background-color: transparent;
+    border: 1px solid {{color.hairline}};
+    color: {{color.inkMuted}};
+}
+QPushButton#Ghost:hover { color: {{color.shadow}}; border-color: {{color.shadowDeep}}; }
+QPushButton#Ghost:checked {
+    background-color: {{color.solarWash}};
+    border-color: {{color.solar}};
+    color: {{color.solar}};
+    font-weight: 600;
+}
+
+QPushButton#Danger { background-color: transparent; border: 1px solid {{color.alert}}; color: {{color.alert}}; }
+QPushButton#Danger:hover { background-color: {{color.alert}}; color: {{color.void}}; }
+
+QToolButton {
+    background: transparent;
+    border: none;
+    border-radius: {{radius.sm}}px;
+    padding: 6px;
+    color: {{color.inkMuted}};
+}
+QToolButton:hover { background-color: {{color.elevated}}; color: {{color.ink}}; }
+QToolButton:checked { background-color: {{color.solarWash}}; color: {{color.solar}}; }
+
+/* --- Navigation rail ----------------------------------------------------- */
+QPushButton#NavItem {
+    background: transparent;
+    border: none;
+    border-left: 2px solid transparent;
+    border-radius: 0px;
+    text-align: left;
+    padding: 11px 14px;
+    color: {{color.inkMuted}};
+    font-size: {{type.body.size}}px;
+}
+QPushButton#NavItem:hover { background-color: {{color.elevated}}; color: {{color.ink}}; }
+QPushButton#NavItem:checked {
+    background-color: {{color.elevated}};
+    border-left: 2px solid {{color.solar}};
+    color: {{color.ink}};
+    font-weight: 600;
+}
+
+/* --- Inputs -------------------------------------------------------------- */
+QLineEdit, QPlainTextEdit, QTextEdit, QSpinBox, QDoubleSpinBox, QComboBox, QDateTimeEdit {
+    background-color: {{color.void}};
+    border: 1px solid {{color.hairline}};
+    border-radius: {{radius.sm}}px;
+    padding: 7px 10px;
+    color: {{color.ink}};
+    font-family: {{font.mono}};
+    font-size: {{type.code.size}}px;
+}
+QLineEdit:focus, QPlainTextEdit:focus, QSpinBox:focus, QDoubleSpinBox:focus,
+QComboBox:focus, QDateTimeEdit:focus {
+    border-color: {{color.shadowDeep}};
+    background-color: {{color.panel}};
+}
+QLineEdit:disabled, QSpinBox:disabled, QComboBox:disabled { color: {{color.inkFaint}}; }
+
+QComboBox::drop-down { border: none; width: 22px; }
+QComboBox::down-arrow { image: none; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid {{color.inkMuted}}; margin-right: 8px; }
+QComboBox QAbstractItemView {
+    background-color: {{color.elevated}};
+    border: 1px solid {{color.hairlineHot}};
+    selection-background-color: {{color.solarWash}};
+    selection-color: {{color.solar}};
+    outline: none;
+    padding: 4px;
+}
+QSpinBox::up-button, QSpinBox::down-button,
+QDoubleSpinBox::up-button, QDoubleSpinBox::down-button { width: 0px; border: none; }
+QDateTimeEdit::drop-down { border: none; width: 20px; }
+QDateTimeEdit::down-arrow {
+    image: none;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid {{color.inkMuted}};
+    margin-right: 7px;
+}
+QCalendarWidget QWidget { background-color: {{color.elevated}}; color: {{color.ink}}; }
+QCalendarWidget QAbstractItemView:enabled {
+    background-color: {{color.panel}};
+    color: {{color.ink}};
+    selection-background-color: {{color.solarWash}};
+    selection-color: {{color.solar}};
+}
+
+/* --- Slider -------------------------------------------------------------- */
+QSlider::groove:horizontal { height: 2px; background: {{color.hairlineHot}}; border-radius: 1px; }
+QSlider::sub-page:horizontal { background: {{color.shadow}}; height: 2px; border-radius: 1px; }
+QSlider::handle:horizontal {
+    background: {{color.solar}};
+    border: 3px solid {{color.void}};
+    width: 10px; height: 10px;
+    margin: -7px 0;
+    border-radius: 8px;
+}
+QSlider::handle:horizontal:hover { background: {{color.ink}}; }
+
+/* --- Progress ------------------------------------------------------------ */
+QProgressBar {
+    background-color: {{color.hairline}};
+    border: none;
+    border-radius: 2px;
+    height: 4px;
+    text-align: center;
+    color: transparent;
+}
+QProgressBar::chunk { background-color: {{color.solar}}; border-radius: 2px; }
+
+/* --- Tables -------------------------------------------------------------- */
+QTableWidget, QTableView, QTreeView, QListView {
+    background-color: {{color.panel}};
+    alternate-background-color: {{color.elevated}};
+    border: 1px solid {{color.hairline}};
+    border-radius: {{radius.sm}}px;
+    gridline-color: {{color.hairline}};
+    outline: none;
+    font-family: {{font.mono}};
+    font-size: {{type.code.size}}px;
+}
+QTableWidget::item, QTreeView::item, QListView::item { padding: 7px 8px; border: none; }
+QTableWidget::item:selected, QTreeView::item:selected, QListView::item:selected {
+    background-color: {{color.shadowWash}};
+    color: {{color.shadow}};
+}
+QHeaderView::section {
+    background-color: {{color.void}};
+    color: {{color.inkFaint}};
+    border: none;
+    border-bottom: 1px solid {{color.hairlineHot}};
+    padding: 8px;
+    font-family: {{font.mono}};
+    font-size: {{type.section.size}}px;
+    font-weight: 700;
+}
+QTableCornerButton::section { background-color: {{color.void}}; border: none; }
+
+/* --- Tabs ---------------------------------------------------------------- */
+QTabWidget::pane { border: 1px solid {{color.hairline}}; border-radius: {{radius.md}}px; top: -1px; background: {{color.panel}}; }
+QTabBar::tab {
+    background: transparent;
+    color: {{color.inkMuted}};
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 9px 18px;
+    font-family: {{font.mono}};
+    font-size: {{type.section.size}}px;
+    font-weight: 700;
+}
+QTabBar::tab:hover { color: {{color.ink}}; }
+QTabBar::tab:selected { color: {{color.solar}}; border-bottom: 2px solid {{color.solar}}; }
+
+/* --- Scrollbars ---------------------------------------------------------- */
+QScrollBar:vertical { background: transparent; width: 10px; margin: 0; }
+QScrollBar::handle:vertical { background: {{color.hairlineHot}}; border-radius: 5px; min-height: 30px; }
+QScrollBar::handle:vertical:hover { background: {{color.inkFaint}}; }
+QScrollBar:horizontal { background: transparent; height: 10px; margin: 0; }
+QScrollBar::handle:horizontal { background: {{color.hairlineHot}}; border-radius: 5px; min-width: 30px; }
+QScrollBar::handle:horizontal:hover { background: {{color.inkFaint}}; }
+QScrollBar::add-line, QScrollBar::sub-line { height: 0; width: 0; border: none; background: none; }
+QScrollBar::add-page, QScrollBar::sub-page { background: none; }
+
+/* --- Status bar / tooltips ----------------------------------------------- */
+QStatusBar {
+    background-color: {{color.panel}};
+    border-top: 1px solid {{color.hairline}};
+    color: {{color.inkMuted}};
+    font-family: {{font.mono}};
+    font-size: {{type.small.size}}px;
+}
+QStatusBar::item { border: none; }
+
+QToolTip {
+    background-color: {{color.elevated}};
+    color: {{color.ink}};
+    border: 1px solid {{color.hairlineHot}};
+    border-radius: {{radius.sm}}px;
+    padding: 6px 9px;
+    font-family: {{font.mono}};
+    font-size: {{type.small.size}}px;
+}
+
+/* --- Checkbox ------------------------------------------------------------ */
+QCheckBox { spacing: 8px; color: {{color.inkMuted}}; }
+QCheckBox::indicator { width: 14px; height: 14px; border: 1px solid {{color.hairlineHot}}; border-radius: 2px; background: {{color.void}}; }
+QCheckBox::indicator:checked { background: {{color.solar}}; border-color: {{color.solar}}; }
+QCheckBox::indicator:hover { border-color: {{color.shadow}}; }
+
+/* --- Splitter ------------------------------------------------------------ */
+QSplitter::handle { background-color: {{color.void}}; }
+QSplitter::handle:horizontal { width: 5px; }
+QSplitter::handle:vertical { height: 5px; }
+QSplitter::handle:hover { background-color: {{color.shadowDeep}}; }

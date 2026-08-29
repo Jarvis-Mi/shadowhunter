@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+
+jobs:
+  lint:
+    name: Lint (advisory)
+    runs-on: ubuntu-latest
+    # Advisory for now: the codebase is not yet ruff-clean, and `--fix` on the
+    # import rules is unsafe here — cv2 and numpy must be imported before torch
+    # or the process dies at interpreter teardown (see tests/conftest.py).
+    # Flip this to a hard gate once the backlog is cleared deliberately.
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install ruff
+        run: pip install ruff
+
+      - name: ruff check
+        run: ruff check . --output-format=github
+
+  test:
+    name: Test · Python ${{ matrix.python-version }} · ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.10", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      # The headless runners have no libGL, which opencv-python links against.
+      - name: Install system libraries (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgl1 libglib2.0-0
+
+      # CPU-only torch keeps the install to a few hundred MB instead of ~2.5 GB.
+      - name: Install CPU torch (Linux)
+        if: runner.os == 'Linux'
+        run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+      # Core dependencies only — the five desktop toolkits are not importable
+      # headless and no test needs them.
+      - name: Install package
+        run: pip install -e ".[dev]" httpx
+
+      - name: Run tests
+        run: python -m pytest -q

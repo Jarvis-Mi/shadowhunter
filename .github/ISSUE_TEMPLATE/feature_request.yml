@@ -1,0 +1,73 @@
+name: Feature request
+description: Propose a capability, a metric, or a change in behaviour.
+title: "[feat] "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before proposing a front-end change, please read the two architectural rules in
+        [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md): views never import `models`, and
+        views never hard-code a colour.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What is hard or impossible today? Describe the situation, not the solution.
+      placeholder: |
+        The proxy reward score is reported per hunt, but there is no way to see whether it
+        correlates with real error across a whole tile.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: What should happen instead?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which layer would this touch?
+      options:
+        - Models — RL environment or rewards
+        - Models — vision / shadow ops
+        - Models — height CNN or fusion
+        - Views — a front-end
+        - Views — the HTTP API
+        - Templates — design tokens
+        - Services — client or supervisor
+        - Data / datasets
+        - Docs
+        - Not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What else would solve this, and why is the proposal better?
+
+  - type: checkboxes
+    id: label-free
+    attributes:
+      label: Label-free check
+      description: >-
+        The Stage-1 reward is deliberately computable from the crop and sun angle alone. If
+        this proposal touches the reward, confirm it preserves that property — or explain in
+        the proposal why breaking it is worth the loss of transferability.
+      options:
+        - label: This proposal does not require ground-truth heights at Stage 1
+        - label: Not applicable — this does not touch Stage 1
+
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Would you be willing to work on this?
+      options:
+        - label: I would be willing to open a pull request

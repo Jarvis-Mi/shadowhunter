@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question or discussion
+    url: https://github.com/Jarvis-Mi/shadowhunter/discussions
+    about: Ask about the method, the reward design, or how to run something.
+  - name: Security vulnerability
+    url: https://github.com/Jarvis-Mi/shadowhunter/security/policy
+    about: Report privately — please do not open a public issue.

@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+title: >-
+  Shadow Hunter: Label-Free Zone Selection for Shadow-Based
+  Building Height Estimation
+message: If you use this software, please cite it as below.
+type: software
+authors:
+  - name: Shadow Hunter contributors
+repository-code: https://github.com/Jarvis-Mi/shadowhunter
+url: https://github.com/Jarvis-Mi/shadowhunter
+abstract: >-
+  Shadow Hunter estimates building height from free satellite imagery in two
+  stages. A deep reinforcement-learning agent pans and rescales a window over a
+  tile until it isolates a single, unoccluded, unclipped building shadow,
+  guided only by label-free proxy rewards computed from the crop and the sun
+  angle in the image metadata. A physics-anchored convolutional network then
+  reads that crop and predicts a residual around the analytic estimate
+  h = L tan(theta), together with a calibrated uncertainty. Because the zone
+  selector needs no ground-truth heights, the method transfers to cities where
+  no height labels exist.
+keywords:
+  - remote-sensing
+  - reinforcement-learning
+  - computer-vision
+  - building-height
+  - shadow
+  - sentinel-2
+  - spacenet
+  - label-free
+license: MIT
+version: 1.0.0
+date-released: '2026-08-29'

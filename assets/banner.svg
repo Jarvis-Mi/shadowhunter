@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 340" width="1200" height="340" role="img" aria-label="Shadow Hunter — building height from shadow geometry">
+  <title>Shadow Hunter</title>
+  <desc>Deep-RL zone selection plus a physics-anchored CNN turn one clean building shadow into metres.</desc>
+
+  <defs>
+    <radialGradient id="dusk" cx="12%" cy="-10%" r="120%">
+      <stop offset="0%"   stop-color="#16232D"/>
+      <stop offset="45%"  stop-color="#0A0F14"/>
+      <stop offset="100%" stop-color="#06080B"/>
+    </radialGradient>
+    <linearGradient id="solarSweep" x1="0" y1="0" x2="1" y2="0.3">
+      <stop offset="0%"   stop-color="#FFB020"/>
+      <stop offset="55%"  stop-color="#F26419"/>
+      <stop offset="100%" stop-color="#C7340F"/>
+    </linearGradient>
+    <linearGradient id="shadowSweep" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#3FD3E4"/>
+      <stop offset="100%" stop-color="#127C8C"/>
+    </linearGradient>
+    <linearGradient id="shadowFade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#3FD3E4" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#3FD3E4" stop-opacity="0.55"/>
+    </linearGradient>
+    <linearGradient id="faceLit" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#22313D"/>
+      <stop offset="100%" stop-color="#141F28"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#1F2C36" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#FFB020" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#FFB020" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- ground plane -->
+  <rect width="1200" height="340" fill="url(#dusk)"/>
+  <rect width="1200" height="340" fill="url(#grid)" opacity="0.55"/>
+  <rect x="0" y="0" width="1200" height="340" fill="none" stroke="#1F2C36" stroke-width="2"/>
+
+  <!-- ── left: identity ───────────────────────────────────────────── -->
+  <g transform="translate(72 96)">
+    <rect x="0" y="-34" width="3" height="132" fill="url(#solarSweep)"/>
+    <text x="22" y="-8" font-family="'IBM Plex Mono','Cascadia Mono',Consolas,monospace" font-size="13" letter-spacing="4.5" fill="#FFB020">STAGE 1 · RL  //  STAGE 2 · CNN</text>
+    <text x="20" y="42" font-family="'Chakra Petch',Bahnschrift,'Segoe UI Semibold','Segoe UI',sans-serif" font-size="54" font-weight="700" letter-spacing="2" fill="#E8F0F6">SHADOW HUNTER</text>
+    <text x="22" y="76" font-family="'IBM Plex Sans','Segoe UI',Tahoma,sans-serif" font-size="17" fill="#8497A6">Building height from free satellite imagery —</text>
+    <text x="22" y="99" font-family="'IBM Plex Sans','Segoe UI',Tahoma,sans-serif" font-size="17" fill="#8497A6">by teaching an agent <tspan fill="#3FD3E4">where to look</tspan>.</text>
+  </g>
+
+  <!-- capability chips -->
+  <g font-family="'IBM Plex Mono','Cascadia Mono',Consolas,monospace" font-size="11.5" letter-spacing="1.6">
+    <g transform="translate(94 250)">
+      <rect x="0" y="0" width="122" height="26" rx="3" fill="#0A2C33" stroke="#127C8C"/>
+      <text x="61" y="17" text-anchor="middle" fill="#3FD3E4">LABEL-FREE</text>
+    </g>
+    <g transform="translate(228 250)">
+      <rect x="0" y="0" width="130" height="26" rx="3" fill="#3A2A0C" stroke="#F26419"/>
+      <text x="65" y="17" text-anchor="middle" fill="#FFB020">PHYSICS-FIRST</text>
+    </g>
+    <g transform="translate(370 250)">
+      <rect x="0" y="0" width="152" height="26" rx="3" fill="#121A21" stroke="#2C3E4B"/>
+      <text x="76" y="17" text-anchor="middle" fill="#8497A6">5 FRONT-ENDS</text>
+    </g>
+  </g>
+
+  <!-- ── right: the measurement ────────────────────────────────────── -->
+  <g>
+    <!-- sun -->
+    <circle cx="1092" cy="56" r="46" fill="url(#sunGlow)"/>
+    <circle cx="1092" cy="56" r="13" fill="#FFB020"/>
+    <g stroke="#FFB020" stroke-width="1.5" stroke-linecap="round" opacity="0.75">
+      <path d="M1092 30v-11M1092 93v11M1066 56h-11M1118 56h11M1074 38l-8-8M1110 74l8 8M1110 38l8-8M1074 74l-8 8"/>
+    </g>
+
+    <!-- incident ray grazing the roof edge -->
+    <path d="M1078 60 L760 258" stroke="#FFB020" stroke-width="1.4" stroke-dasharray="7 6" opacity="0.85"/>
+
+    <!-- ground -->
+    <path d="M700 258H1160" stroke="#2C3E4B" stroke-width="2"/>
+
+    <!-- cast shadow -->
+    <path d="M760 258 H930 V270 H760 Z" fill="url(#shadowFade)"/>
+    <path d="M760 258 H930" stroke="url(#shadowSweep)" stroke-width="3"/>
+
+    <!-- building -->
+    <rect x="930" y="152" width="82" height="106" fill="url(#faceLit)" stroke="#2C3E4B" stroke-width="1.5"/>
+    <g stroke="#1F2C36" stroke-width="1">
+      <path d="M946 168h18M978 168h18M946 190h18M978 190h18M946 212h18M978 212h18"/>
+    </g>
+    <path d="M930 152h82" stroke="#FFB020" stroke-width="2"/>
+
+    <!-- angle theta -->
+    <path d="M792 258 A32 32 0 0 0 778 240" fill="none" stroke="#FFB020" stroke-width="1.4"/>
+    <text x="800" y="250" font-family="'IBM Plex Mono','Cascadia Mono',Consolas,monospace" font-size="13" fill="#FFB020">&#952;</text>
+
+    <!-- L dimension -->
+    <g stroke="#3FD3E4" stroke-width="1.2">
+      <path d="M760 288h170M760 282v12M930 282v12"/>
+    </g>
+    <text x="845" y="308" text-anchor="middle" font-family="'IBM Plex Mono','Cascadia Mono',Consolas,monospace" font-size="13" fill="#3FD3E4">L</text>
+
+    <!-- h dimension -->
+    <g stroke="#FFB020" stroke-width="1.2">
+      <path d="M1036 152v106M1030 152h12M1030 258h12"/>
+    </g>
+    <text x="1052" y="210" font-family="'IBM Plex Mono','Cascadia Mono',Consolas,monospace" font-size="13" fill="#FFB020">h</text>
+
+    <!-- agent crop window -->
+    <rect x="742" y="126" width="292" height="158" fill="none" stroke="#69E38C" stroke-width="1.2" stroke-dasharray="4 5" opacity="0.85"/>
+    <g stroke="#69E38C" stroke-width="2">
+      <path d="M742 140v-14h14M1020 126h14v14M1034 270v14h-14M756 284h-14v-14"/>
+    </g>
+    <text x="742" y="118" font-family="'IBM Plex Mono','Cascadia Mono',Consolas,monospace" font-size="11" letter-spacing="2" fill="#69E38C">ZONE LOCKED</text>
+
+    <!-- readout -->
+    <text x="1160" y="322" text-anchor="end" font-family="'IBM Plex Mono','Cascadia Mono',Consolas,monospace" font-size="15" fill="#E8F0F6">h = L &#183; tan &#952;</text>
+  </g>
+</svg>

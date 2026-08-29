@@ -1,0 +1,278 @@
+/* ==========================================================================
+   ORBITAL DUSK — web sheet for the NiceGUI observatory.
+   CSS custom properties are generated from tokens.json by theme.css_variables();
+   this file only describes *composition*. Nothing here invents a colour.
+   ========================================================================== */
+
+* { box-sizing: border-box; }
+
+html, body, #app {
+  background: var(--sh-void);
+  color: var(--sh-ink);
+  font-family: var(--sh-font-body);
+  font-size: 14px;
+  margin: 0;
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Atmosphere: a dusk field, a hairline grid, and a grain layer.
+   Three cheap layers do more for depth than any drop shadow. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(58% 46% at 8% -6%, rgba(255,176,32,.10) 0%, transparent 62%),
+    radial-gradient(48% 40% at 96% 8%, rgba(63,211,228,.09) 0%, transparent 58%),
+    var(--sh-grad-dusk-field);
+  pointer-events: none;
+  z-index: 0;
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--sh-hairline) 1px, transparent 1px),
+    linear-gradient(90deg, var(--sh-hairline) 1px, transparent 1px);
+  background-size: 46px 46px;
+  opacity: .30;
+  pointer-events: none;
+  z-index: 0;
+}
+.sh-root { position: relative; z-index: 1; }
+
+/* --- Typography ---------------------------------------------------------- */
+.sh-wordmark {
+  font-family: var(--sh-font-display);
+  font-weight: 700;
+  font-size: 30px;
+  letter-spacing: .14em;
+  line-height: 1;
+  margin: 0;
+}
+.sh-wordmark em { color: var(--sh-solar); font-style: normal; }
+
+.sh-section {
+  font-family: var(--sh-font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--sh-ink-faint);
+  margin: 0 0 10px;
+}
+.sh-caption { font-size: 12px; color: var(--sh-ink-muted); line-height: 1.65; margin: 0; }
+.sh-mono { font-family: var(--sh-font-mono); font-size: 12px; color: var(--sh-ink-muted); }
+
+/* --- Surfaces ------------------------------------------------------------ */
+.sh-card {
+  background: color-mix(in srgb, var(--sh-panel) 88%, transparent);
+  border: 1px solid var(--sh-hairline);
+  border-radius: var(--sh-radius-md);
+  padding: 18px 20px;
+  backdrop-filter: blur(9px);
+  position: relative;
+  overflow: hidden;
+}
+.sh-card::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--sh-hairline-hot) 22%, var(--sh-hairline-hot) 78%, transparent);
+}
+.sh-card--accent { border-color: color-mix(in srgb, var(--sh-solar) 34%, var(--sh-hairline)); }
+.sh-card--accent::after { background: var(--sh-grad-solar-sweep); }
+
+.sh-rule { height: 1px; background: var(--sh-hairline); border: 0; margin: 16px 0; }
+
+/* --- Header -------------------------------------------------------------- */
+.sh-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px 30px;
+  border-bottom: 1px solid var(--sh-hairline);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--sh-panel) 92%, transparent), transparent);
+}
+.sh-header .sh-divider { width: 1px; height: 34px; background: var(--sh-hairline-hot); }
+
+.sh-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--sh-font-mono);
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  border: 1px solid var(--sh-hairline-hot);
+  border-radius: var(--sh-radius-pill);
+  color: var(--sh-ink-muted);
+  white-space: nowrap;
+}
+.sh-pill b { color: var(--sh-ink); font-weight: 600; }
+.sh-pill--live { border-color: color-mix(in srgb, var(--sh-signal) 45%, transparent); color: var(--sh-signal); }
+.sh-pill--warn { border-color: color-mix(in srgb, var(--sh-solar) 45%, transparent); color: var(--sh-solar); }
+
+.sh-dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.sh-dot--pulse { animation: shPulse 1.5s var(--sh-motion-ease) infinite; }
+@keyframes shPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 currentColor; }
+  50%      { opacity: .45; box-shadow: 0 0 0 5px transparent; }
+}
+
+/* --- Readouts ------------------------------------------------------------ */
+.sh-readout { display: flex; flex-direction: column; gap: 3px; }
+.sh-readout .v {
+  font-family: var(--sh-font-mono);
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.05;
+  color: var(--sh-ink);
+  font-variant-numeric: tabular-nums;
+}
+.sh-readout .v.solar  { color: var(--sh-solar); }
+.sh-readout .v.shadow { color: var(--sh-shadow); }
+.sh-readout .v.signal { color: var(--sh-signal); }
+.sh-readout .u { font-family: var(--sh-font-mono); font-size: 10px; color: var(--sh-ink-faint); letter-spacing: .08em; }
+
+/* --- Metric bars --------------------------------------------------------- */
+.sh-metric { margin-bottom: 12px; }
+.sh-metric .row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-family: var(--sh-font-mono); font-size: 10px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--sh-ink-muted); margin-bottom: 5px;
+}
+.sh-metric .row b { color: var(--sh-shadow); font-weight: 600; font-variant-numeric: tabular-nums; }
+.sh-metric.solar  .row b { color: var(--sh-solar); }
+.sh-metric.violet .row b { color: var(--sh-violet); }
+.sh-metric.bad    .row b { color: var(--sh-alert); }
+.sh-metric .track { height: 3px; background: var(--sh-hairline); border-radius: 2px; overflow: hidden; }
+.sh-metric .fill {
+  height: 100%; border-radius: 2px;
+  background: var(--sh-grad-shadow-sweep);
+  transition: width var(--sh-motion-base) var(--sh-motion-ease-out);
+}
+.sh-metric.solar  .fill { background: var(--sh-grad-solar-sweep); }
+.sh-metric.violet .fill { background: linear-gradient(90deg, color-mix(in srgb, var(--sh-violet) 45%, transparent), var(--sh-violet)); }
+.sh-metric.bad    .fill { background: linear-gradient(90deg, color-mix(in srgb, var(--sh-alert) 45%, transparent), var(--sh-alert)); }
+
+/* --- Scene viewport ------------------------------------------------------ */
+.sh-viewport {
+  position: relative;
+  border: 1px solid var(--sh-hairline-hot);
+  border-radius: var(--sh-radius-sm);
+  background: var(--sh-void);
+  overflow: hidden;
+  min-height: 320px;
+  display: flex; align-items: center; justify-content: center;
+}
+.sh-viewport img { display: block; max-width: 100%; height: auto; image-rendering: crisp-edges; }
+.sh-viewport::after {          /* faint scanlines - it is an instrument, not a photo */
+  content: "";
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(0deg, rgba(0,0,0,.16) 0 1px, transparent 1px 3px);
+  pointer-events: none; opacity: .5;
+}
+.sh-viewport.busy::before {
+  content: "";
+  position: absolute; left: 0; right: 0; height: 90px;
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--sh-shadow) 26%, transparent));
+  animation: shScan 1.6s linear infinite;
+  z-index: 2;
+}
+@keyframes shScan { from { top: -90px; } to { top: 100%; } }
+
+.sh-empty {
+  font-family: var(--sh-font-mono); font-size: 11px; letter-spacing: .2em;
+  color: var(--sh-ink-faint); text-align: center; padding: 90px 20px; text-transform: uppercase;
+}
+
+/* --- Controls ------------------------------------------------------------ */
+.sh-btn, .q-btn.sh-btn {
+  font-family: var(--sh-font-mono) !important;
+  font-size: 11px !important;
+  letter-spacing: .16em !important;
+  text-transform: uppercase;
+  border-radius: var(--sh-radius-sm) !important;
+  padding: 10px 20px !important;
+  transition: transform var(--sh-motion-quick) var(--sh-motion-ease),
+              box-shadow var(--sh-motion-quick) var(--sh-motion-ease);
+}
+.sh-btn:hover { transform: translateY(-1px); }
+.sh-btn--primary { background: var(--sh-grad-solar-sweep) !important; color: var(--sh-void) !important; font-weight: 700 !important; }
+.sh-btn--primary:hover { box-shadow: var(--sh-elev-glow-solar); }
+.sh-btn--ghost { background: transparent !important; color: var(--sh-ink-muted) !important; border: 1px solid var(--sh-hairline-hot) !important; }
+.sh-btn--ghost:hover { color: var(--sh-shadow) !important; border-color: var(--sh-shadow-deep) !important; }
+.sh-btn--danger { background: transparent !important; color: var(--sh-alert) !important; border: 1px solid var(--sh-alert) !important; }
+
+/* Quasar overrides, scoped so they cannot leak into unrelated widgets. */
+.sh-root .q-field__control { background: var(--sh-void) !important; border-radius: var(--sh-radius-sm); }
+.sh-root .q-field__native, .sh-root .q-field__input { color: var(--sh-ink) !important; font-family: var(--sh-font-mono); }
+.sh-root .q-field__label { color: var(--sh-ink-faint) !important; font-size: 11px; letter-spacing: .1em; }
+.sh-root .q-slider__track { background: var(--sh-hairline) !important; }
+.sh-root .q-slider__selection { background: var(--sh-shadow) !important; }
+.sh-root .q-slider__thumb { color: var(--sh-solar) !important; }
+.sh-root .q-linear-progress__model { background: var(--sh-solar) !important; }
+.sh-root .q-table { background: transparent !important; color: var(--sh-ink); font-family: var(--sh-font-mono); font-size: 12px; }
+.sh-root .q-table thead th {
+  color: var(--sh-ink-faint) !important;
+  font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+  border-bottom: 1px solid var(--sh-hairline-hot) !important;
+}
+.sh-root .q-table tbody td { border-bottom: 1px solid var(--sh-hairline) !important; }
+.sh-root .q-table tbody tr:hover { background: var(--sh-elevated) !important; }
+.sh-root .q-tab { font-family: var(--sh-font-mono); font-size: 11px; letter-spacing: .18em; color: var(--sh-ink-muted); }
+.sh-root .q-tab--active { color: var(--sh-solar); }
+.sh-root .q-tab__indicator { background: var(--sh-solar); }
+
+/* --- Sun dial ------------------------------------------------------------ */
+.sh-dial { display: block; margin: 0 auto; }
+.sh-dial .face   { fill: var(--sh-void); stroke: var(--sh-hairline-hot); }
+.sh-dial .tick   { stroke: var(--sh-hairline-hot); }
+.sh-dial .tick.major { stroke: var(--sh-ink-faint); }
+.sh-dial .needle { stroke: var(--sh-solar); stroke-width: 2; }
+.sh-dial .cast   { stroke: var(--sh-shadow); stroke-width: 2; stroke-dasharray: 4 4; opacity: .75; }
+.sh-dial .arc    { stroke: var(--sh-shadow-deep); stroke-width: 3; fill: none; }
+.sh-dial text    { fill: var(--sh-ink-faint); font-family: var(--sh-font-mono); font-size: 8px; }
+.sh-dial .value  { fill: var(--sh-solar); font-size: 13px; font-weight: 700; }
+
+/* --- Entrance choreography ---------------------------------------------- */
+.sh-rise { animation: shRise var(--sh-motion-slow) var(--sh-motion-ease-out) both; }
+.sh-rise:nth-child(1) { animation-delay: .02s; }
+.sh-rise:nth-child(2) { animation-delay: .08s; }
+.sh-rise:nth-child(3) { animation-delay: .14s; }
+.sh-rise:nth-child(4) { animation-delay: .20s; }
+.sh-rise:nth-child(5) { animation-delay: .26s; }
+@keyframes shRise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sh-rise, .sh-dot--pulse, .sh-viewport.busy::before { animation: none !important; }
+  .sh-metric .fill { transition: none; }
+}
+
+/* --- Log ----------------------------------------------------------------- */
+.sh-log {
+  font-family: var(--sh-font-mono);
+  font-size: 11px;
+  line-height: 1.85;
+  color: var(--sh-ink-muted);
+  max-height: 220px;
+  overflow-y: auto;
+}
+.sh-log .t { color: var(--sh-ink-faint); }
+.sh-log .k { color: var(--sh-shadow); }
+.sh-log .w { color: var(--sh-solar); }
+.sh-log .e { color: var(--sh-alert); }
+
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--sh-hairline-hot); border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: var(--sh-ink-faint); }
